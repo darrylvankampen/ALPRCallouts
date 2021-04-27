@@ -1,0 +1,11 @@
+C:\FivePD\ALPRCallouts\bin\Release\ALPRCallouts.net.dll
+C:\FivePD\ALPRCallouts\bin\Release\ALPRCallouts.net.pdb
+C:\FivePD\ALPRCallouts\bin\Release\CitizenFX.Core.Client.dll
+C:\FivePD\ALPRCallouts\bin\Release\FivePD.net.dll
+C:\FivePD\ALPRCallouts\bin\Release\CitizenFX.Core.Client.xml
+C:\FivePD\ALPRCallouts\bin\Release\FivePD.net.xml
+C:\FivePD\ALPRCallouts\obj\Release\ALPRCallouts.csprojAssemblyReference.cache
+C:\FivePD\ALPRCallouts\obj\Release\ALPRCallouts.csproj.CoreCompileInputs.cache
+C:\FivePD\ALPRCallouts\obj\Release\ALPRCallouts.csproj.CopyComplete
+C:\FivePD\ALPRCallouts\obj\Release\ALPRCallouts.net.dll
+C:\FivePD\ALPRCallouts\obj\Release\ALPRCallouts.net.pdb
