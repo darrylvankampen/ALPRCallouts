@@ -50,10 +50,10 @@ namespace ALPRCallouts
             this.SuspectData = await this.Suspect.GetData();
             this.SuspectData.Warrant = SuspectWarrant;
             var violation = new Violation();
-            violation.Offence = SuspectWarrant;
-            violation.Charge = GenerateRandomCharge();
+            violation.Offence = "<" + SuspectWarrant + ">";
+            violation.Charge = "<" + GenerateRandomCharge() + ">";
             this.SuspectData.Violations.Add(violation);
-            Utilities.SetPedData(this.Suspect.NetworkId, this.SuspectData);
+            this.Suspect.SetData(this.SuspectData);
 
             int passengerChance = Utils.GetRandomNumber();
             if (passengerChance < 50)
@@ -81,7 +81,7 @@ namespace ALPRCallouts
                 int randomChanceOfShootingPassenger = Utils.GetRandomNumber();
                 if (randomChanceOfShootingPassenger <= 35)
                 {
-                    this.Passenger.Weapons.Give(WeaponHash.Pistol50, 1000, true, true);
+                    this.Passenger.Weapons.Give(Utils.GetRandomWeapon(), 1000, true, true);
                     this.Passenger.Task.FightAgainst(player);
                 }
                 Blip.Delete();

@@ -74,7 +74,7 @@ namespace ALPRCallouts
                 int randomChanceOfShootingPassenger = Utils.GetRandomNumber();
                 if (randomChanceOfShootingPassenger <= 35)
                 {
-                    this.Passenger.Weapons.Give(WeaponHash.Pistol50, 1000, true, true);
+                    this.Passenger.Weapons.Give(Utils.GetRandomWeapon(), 1000, true, true);
                     this.Passenger.Task.FightAgainst(player);
                 }
                 Blip.Delete();

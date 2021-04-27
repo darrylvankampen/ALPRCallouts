@@ -32,6 +32,27 @@ namespace ALPRCallouts
             API.AddTextComponentSubstringPlayerName(message);
             API.EndTextCommandThefeedPostTicker(false,true);
         }
+
+        internal static WeaponHash GetRandomWeapon()
+        {
+            List<WeaponHash> weps = new List<WeaponHash>
+            {
+                WeaponHash.Pistol,
+                WeaponHash.Pistol50,
+                WeaponHash.PistolMk2,
+                WeaponHash.CombatPistol,
+                WeaponHash.HeavyPistol,
+                WeaponHash.MachinePistol,
+                WeaponHash.MarksmanPistol,
+                WeaponHash.VintagePistol,
+                WeaponHash.APPistol,
+                WeaponHash.SNSPistol,
+                WeaponHash.SNSPistolMk2,
+                WeaponHash.Revolver,
+                WeaponHash.RevolverMk2
+            };
+            return weps[GetRandomNumberBetween(0, weps.Count)];
+        }
         
         internal static VehicleHash GetRandomVehicle()
         {
