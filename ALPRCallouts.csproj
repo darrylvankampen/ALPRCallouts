@@ -47,6 +47,10 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="AlprHitNoVehicleInsurance.cs" />
+        <Compile Include="AlprHitNoVehicleRegistration.cs" />
+        <Compile Include="AlprHitOwnerLicenseRevoked.cs" />
+        <Compile Include="AlprHitOwnerLicenseSuspended.cs" />
+        <Compile Include="AlprHitOwnerWarrant.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Utils.cs" />
     </ItemGroup>
