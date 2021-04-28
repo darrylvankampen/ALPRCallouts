@@ -22,6 +22,7 @@ namespace ALPRCallouts
         
         public AlprHitOwnerWarrant()
         {
+            Config.LoadConf();
             InitInfo(World.GetNextPositionOnStreet(
                 Game.PlayerPed.GetOffsetPosition(Utils.GetRandomPosition(300, 800))));
             ShortName = "ALPR Hit Owner Warrant (" + GenerateRandomWarrant() + ")";
@@ -34,6 +35,7 @@ namespace ALPRCallouts
         {
             CreateBlip();
             UpdateData();
+            Utils.Notify("Please respond to the latest known location.");
             Utils.Notify("Vehicle information will be forwarded as soon as possible.");
         }
 
@@ -49,14 +51,10 @@ namespace ALPRCallouts
             this.Suspect.BlockPermanentEvents = true;
             this.SuspectData = await this.Suspect.GetData();
             this.SuspectData.Warrant = SuspectWarrant;
-            var violation = new Violation();
-            violation.Offence = "<" + SuspectWarrant + ">";
-            violation.Charge = "<" + GenerateRandomCharge() + ">";
-            this.SuspectData.Violations.Add(violation);
             this.Suspect.SetData(this.SuspectData);
 
             int passengerChance = Utils.GetRandomNumber();
-            if (passengerChance < 50)
+            if (passengerChance <= Config.hasPassenger)
             {
                 this.Passenger = await SpawnPed(RandomUtils.GetRandomPed(), Location + 2);
                 this.Passenger.SetIntoVehicle(this.Vehicle, VehicleSeat.Passenger);
@@ -66,7 +64,7 @@ namespace ALPRCallouts
             this.Vehicle.AttachBlip();
 
             int randomChance = Utils.GetRandomNumber();
-            if (randomChance >= 65)
+            if (randomChance <= Config.chanceOfStartingPursuit)
             {
                 Utilities.ExcludeVehicleFromTrafficStop(this.Vehicle.NetworkId, true);
                 Utils.Notify("Suspect(s) are fleeing in a " + this.VehicleData.Color + " " +  this.VehicleData.Name);
@@ -79,7 +77,7 @@ namespace ALPRCallouts
                 this.Suspect.Task.FleeFrom(player);
                 Pursuit.RegisterPursuit(this.Suspect);
                 int randomChanceOfShootingPassenger = Utils.GetRandomNumber();
-                if (randomChanceOfShootingPassenger <= 35)
+                if (randomChanceOfShootingPassenger <= Config.passengerHavingWeapon)
                 {
                     this.Passenger.Weapons.Give(Utils.GetRandomWeapon(), 1000, true, true);
                     this.Passenger.Task.FightAgainst(player);
@@ -91,77 +89,16 @@ namespace ALPRCallouts
                 this.Suspect.Task.CruiseWithVehicle(this.Vehicle, 25f, 786603);
                 Utils.Notify("Vehicle information: \n" + this.VehicleData.Color + " " + this.VehicleData.Name);
                 Utils.Notify("License plate: " + this.VehicleData.LicensePlate);
+                Blip.Delete();
             }
         }
 
         private String GenerateRandomWarrant()
         {
-            List<String> warrants = new List<string>
-            {
-                "NO DRIVERS LICENSE",
-                "PUBLIC INTOXICATION",
-                "CRIMINAL THREATENING",
-                "SECOND DEGREE ASSAULT",
-                "SHOPLIFTING",
-                "STALKING",
-                "BURGLARY",
-                "SALE OF A CONTROLLED DRUG",
-                "RECEIVING / POSSESSION OF STOLEN PROPERTY",
-                "FELONIOUS USE OF A FIREARM",
-                "SIMPLE ASSAULT",
-                "CRIMINAL TRESPASS",
-                "THEFT",
-                "VIOL OF BAIL CONDITIONS",
-                "ORGANISED CRIME",
-                "THEFT OF A MOTOR VEHICLE",
-                "POSSESSION OF DANGEROUS WEAPON",
-                "POSSESSION OF DRUGS",
-                "CONDUCT AFTER ACCIDENT",
-                "CRIMINAL MISCHIEF",
-                "SEX OFFENDER FAIL TO REGISTER",
-                "CONTEMPT OF COURT",
-                "DUTY TO REPORT",
-                "BREACH OF BAIL",
-                "OBSTRUCTING",
-                "VIOLATION OF PROTECTIVE ORDER"
-            };
+            List<String> warrants = Config.Warrants;
             this.SuspectWarrant = warrants[Utils.GetRandomNumberBetween(0, warrants.Count)];
             return this.SuspectWarrant;
         }
-
-        private String GenerateRandomCharge()
-        {
-            List<String> charges = new List<string>
-            {
-                "$100 FINE",
-                "$200 FINE",
-                "$300 FINE",
-                "$400 FINE",
-                "$500 FINE",
-                "1 MO PRISON",
-                "2 MO PRISON",
-                "3 MO PRISON",
-                "4 MO PRISON",
-                "5 MO PRISON",
-                "6 MO PRISON",
-                "7 MO PRISON",
-                "8 MO PRISON",
-                "9 MO PRISON",
-                "10 MO PRISON",
-                "11 MO PRISON",
-                "1 YEAR PRISON",
-                "2 YEARS PRISON",
-                "3 YEARS PRISON",
-                "4 YEARS PRISON",
-                "5 YEARS PRISON",
-                "6 YEARS PRISON",
-                "7 YEARS PRISON",
-                "8 YEARS PRISON",
-                "9 YEARS PRISON",
-                "10 YEARS PRISON",
-            };
-            return charges[Utils.GetRandomNumberBetween(0, charges.Count)];
-        } 
 
         private void CreateBlip(float circleRadius = 75f, BlipColor color = BlipColor.Red, BlipSprite sprite = BlipSprite.BigCircle, int alpha = 100)
         {

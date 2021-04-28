@@ -9,3 +9,5 @@ C:\FivePD\ALPRCallouts\obj\Release\ALPRCallouts.csproj.CoreCompileInputs.cache
 C:\FivePD\ALPRCallouts\obj\Release\ALPRCallouts.csproj.CopyComplete
 C:\FivePD\ALPRCallouts\obj\Release\ALPRCallouts.net.dll
 C:\FivePD\ALPRCallouts\obj\Release\ALPRCallouts.net.pdb
+C:\FivePD\ALPRCallouts\bin\Release\Newtonsoft.Json.dll
+C:\FivePD\ALPRCallouts\bin\Release\Newtonsoft.Json.xml
